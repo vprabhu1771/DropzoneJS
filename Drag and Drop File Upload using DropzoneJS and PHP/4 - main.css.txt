@@ -1,0 +1,5 @@
+.dropzone {
+    background: none repeat scroll 0 0 white;
+    border: 2px dashed #ff7361;
+    border-radius: 5px;
+}

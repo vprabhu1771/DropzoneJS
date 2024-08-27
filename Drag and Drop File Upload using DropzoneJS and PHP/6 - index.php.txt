@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+
+    <link rel="stylesheet" href="main.css">
+
+    <script src="main.js"></script>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Drag and Drop File Upload using DropzoneJS and PHP</h1>
+
+        <!-- Files Upload form -->
+        <div class="upload-div">
+            <form action="upload.php" class="dropzone"></form>
+        </div>
+
+        <!-- Display uploaded files -->
+        <div class="gallery">
+
+            <h3>Uploaded Files</h3>
+
+            <?php
+
+                // Include the database configuration file
+                require 'config.php';
+
+                // Get files from the database
+                $query = $db->query("SELECT * FROM files ORDER BY id DESC");
+
+                if ($query->num_rows > 0) 
+                {
+                    while ($row = $query->fetch_assoc()) 
+                    {
+                        $filePath = 'uploads/' . $row['file_name'];
+                        $fileMime = mime_content_type($filePath);
+            ?>
+
+                    <embed src="<?php echo $filePath; ?>" type="<?php echo $fileMime; ?>" width="240px" height="240px" />
+
+            <?php                    
+                    }
+                
+                }
+                else
+                {
+            ?>
+            
+                    <p>No files(s) found...</p>
+
+            <?php
+                }
+
+            ?>
+
+        </div>
+
+
+    </div>
+    
+</body>
+</html>
